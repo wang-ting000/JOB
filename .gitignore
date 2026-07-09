@@ -1,0 +1,13 @@
+# Local clone/output folders
+/JOB/
+
+# Intermediate arXiv extraction files; keep the exported figure*.png assets.
+/notes/assets/ijepa.pdf
+/notes/assets/ijepa_source.tar
+/notes/assets/IJEPA.pdf
+/notes/assets/assets/
+/notes/assets/*.tex
+/notes/assets/*.sty
+/notes/assets/*.bib
+/notes/assets/*.bst
+/notes/assets/*.bbl

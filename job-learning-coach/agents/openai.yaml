@@ -1,0 +1,4 @@
+interface:
+  display_name: "JOB Learning Coach"
+  short_description: "Goal-driven teaching with practice."
+  default_prompt: "Use $job-learning-coach to teach me a topic through my interests, needs, examples, and practice tasks."
