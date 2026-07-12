@@ -1,0 +1,703 @@
+{
+  "surface": "report",
+  "manifest": {
+    "version": 1,
+    "surface": "report",
+    "title": "CKM 相关论文进展与研究 GAP 调研",
+    "description": "基于用户课题文件的11项问题，对截至2026-07-12的CKM论文、原型、跨域验证和标准化进展进行逐项GAP审查。",
+    "generatedAt": "2026-07-12T06:30:34.173Z",
+    "cards": [],
+    "charts": [
+      {
+        "id": "issue_maturity_chart",
+        "title": "11项问题的研究成熟度分类",
+        "subtitle": "按原问题表述的新颖性风险分类；这是证据审查结果，不是论文计量。",
+        "headerMarkdown": "强GAP仍需明确问题边界；“需收束”表示相关模块已有明显进展；“原表述已占据”表示不能再按原措辞宣称首创。",
+        "type": "bar",
+        "dataset": "issue_maturity",
+        "sourceId": "issue_maturity_sql",
+        "valueFormat": "number",
+        "encodings": {
+          "x": {
+            "field": "category",
+            "type": "nominal",
+            "label": "判定类别"
+          },
+          "y": {
+            "field": "count",
+            "type": "quantitative",
+            "label": "问题数量"
+          },
+          "tooltip": [
+            {
+              "field": "items",
+              "type": "nominal",
+              "label": "对应问题"
+            },
+            {
+              "field": "interpretation",
+              "type": "nominal",
+              "label": "含义"
+            }
+          ]
+        }
+      }
+    ],
+    "tables": [
+      {
+        "id": "issue_review_table",
+        "title": "11项问题逐项判定",
+        "subtitle": "每一项均区分已有进展、剩余GAP与建议改写；可按序号排序。",
+        "headerMarkdown": "“已出现相关论文”不等于问题完全解决；判定关注的是原措辞还能否作为新颖性主张。",
+        "dataset": "issue_review",
+        "sourceId": "issue_review_sql",
+        "defaultSort": {
+          "field": "item_no",
+          "direction": "asc"
+        },
+        "density": "dense",
+        "columns": [
+          {
+            "field": "item_no",
+            "label": "序号",
+            "format": "number"
+          },
+          {
+            "field": "question",
+            "label": "原文件问题",
+            "type": "text"
+          },
+          {
+            "field": "progress",
+            "label": "论文进展",
+            "type": "text"
+          },
+          {
+            "field": "gap_status",
+            "label": "GAP判定",
+            "type": "text"
+          },
+          {
+            "field": "rewrite",
+            "label": "建议改写",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "id": "paper_plan_table",
+        "title": "建议的课题与论文结构",
+        "subtitle": "四个模块共享同一数据协议与评测闭环。",
+        "dataset": "paper_plan",
+        "sourceId": "paper_plan_sql",
+        "defaultSort": {
+          "field": "module",
+          "direction": "asc"
+        },
+        "density": "spacious",
+        "columns": [
+          {
+            "field": "module",
+            "label": "模块",
+            "type": "text"
+          },
+          {
+            "field": "scientific_question",
+            "label": "核心科学问题",
+            "type": "text"
+          },
+          {
+            "field": "source_items",
+            "label": "对应原文件",
+            "type": "text"
+          },
+          {
+            "field": "deliverable",
+            "label": "建议产出",
+            "type": "text"
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "source_document",
+        "label": "《课题四问题梳理与解决计划》11项问题提取",
+        "path": "source_document_extract.md",
+        "query": {
+          "engine": "local-file",
+          "description": "从用户提供的 DOCX OOXML 正文提取并人工归并为 11 个问题",
+          "executed_at": "2026-07-12T06:30:34.173Z"
+        }
+      },
+      {
+        "id": "source_notes",
+        "label": "检索方法、证据边界与代表性来源清单",
+        "path": "source_notes.md",
+        "query": {
+          "engine": "source-review",
+          "description": "围绕11个问题的目标化一手文献与官方标准目录核验；截止2026-07-12",
+          "executed_at": "2026-07-12T06:30:34.173Z"
+        }
+      },
+      {
+        "id": "issue_maturity_sql",
+        "label": "11项问题成熟度分类派生数据",
+        "path": "issue_maturity.sql",
+        "query": {
+          "engine": "sql-values",
+          "sql": "SELECT * FROM (VALUES ('强GAP', 5, '1、3、5、10、11', '仍有实质空白，但需以可验证边界重写'), ('需收束', 3, '4、6、7', '相关模块已推进，应转向交叉或闭环问题'), ('原表述已占据', 3, '2、8、9', '宽泛创新点已有高度重合工作')) AS issue_maturity(category, count, items, interpretation);",
+          "description": "由11项逐条证据审查结果汇总的透明分类数据；非论文计量",
+          "executed_at": "2026-07-12T06:30:34.173Z"
+        }
+      },
+      {
+        "id": "issue_review_sql",
+        "label": "11项问题逐项证据判定",
+        "path": "issue_review.sql"
+      },
+      {
+        "id": "paper_plan_sql",
+        "label": "建议的课题与论文结构",
+        "path": "paper_plan.sql"
+      },
+      {
+        "id": "foundational_ckm",
+        "label": "Toward Environment-Aware 6G Communications via CKM",
+        "href": "https://arxiv.org/abs/2007.09332",
+        "query": {
+          "engine": "paper",
+          "description": "CKM定义与早期应用边界",
+          "executed_at": "2026-07-12T06:30:34.173Z"
+        }
+      },
+      {
+        "id": "ckm_tutorial",
+        "label": "A Tutorial on Environment-Aware Communications via CKM for 6G",
+        "href": "https://arxiv.org/abs/2309.07460",
+        "query": {
+          "engine": "paper",
+          "description": "CKM体系、构建、查询、应用与开放问题",
+          "executed_at": "2026-07-12T06:30:34.173Z"
+        }
+      },
+      {
+        "id": "ckmdiff",
+        "label": "CKMDiff, npj Wireless Technology, 2026",
+        "href": "https://www.nature.com/articles/s44459-026-00042-1",
+        "query": {
+          "engine": "journal",
+          "description": "生成式CKM去噪、补全和超分辨率的近期同行评审证据",
+          "executed_at": "2026-07-12T06:30:34.173Z"
+        }
+      },
+      {
+        "id": "pmnet",
+        "label": "A Scalable and Generalizable Pathloss Map Prediction",
+        "href": "https://arxiv.org/abs/2312.03950",
+        "query": {
+          "engine": "paper",
+          "description": "跨城市迁移与目标域微调边界",
+          "executed_at": "2026-07-12T06:30:34.173Z"
+        }
+      },
+      {
+        "id": "indoor_challenge",
+        "label": "The First Indoor Pathloss Radio Map Prediction Challenge",
+        "href": "https://arxiv.org/abs/2501.13698",
+        "query": {
+          "engine": "paper",
+          "description": "跨室内布局、频率和天线方向图benchmark",
+          "executed_at": "2026-07-12T06:30:34.173Z"
+        }
+      },
+      {
+        "id": "ckmimagenet",
+        "label": "CKMImageNet",
+        "href": "https://arxiv.org/abs/2504.09849",
+        "query": {
+          "engine": "paper",
+          "description": "多维CKM数据对象与数据集边界",
+          "executed_at": "2026-07-12T06:30:34.173Z"
+        }
+      },
+      {
+        "id": "spectrum_surveying",
+        "label": "Spectrum Surveying: Active Radio Map Estimation with Autonomous UAVs",
+        "href": "https://arxiv.org/abs/2201.04125",
+        "query": {
+          "engine": "paper",
+          "description": "不确定度驱动主动测量与轨迹的先行工作",
+          "executed_at": "2026-07-12T06:30:34.173Z"
+        }
+      },
+      {
+        "id": "bayes_active",
+        "label": "Bayesian Active Learning for Sample Efficient 5G Radio Map Reconstruction",
+        "href": "https://doi.org/10.1109/TWC.2024.3483112",
+        "query": {
+          "engine": "paper",
+          "description": "真实5G数据、主动选点与移动代价",
+          "executed_at": "2026-07-12T06:30:34.173Z"
+        }
+      },
+      {
+        "id": "learning_radio_environments",
+        "label": "Learning Radio Environments by Differentiable Ray Tracing",
+        "href": "https://arxiv.org/abs/2311.18558",
+        "query": {
+          "engine": "paper",
+          "description": "真实测量下的材料、散射和天线参数学习",
+          "executed_at": "2026-07-12T06:30:34.173Z"
+        }
+      },
+      {
+        "id": "mef_update",
+        "label": "Update Strategy for Channel Knowledge Map in Complex Environments",
+        "href": "https://arxiv.org/abs/2512.15154",
+        "query": {
+          "engine": "paper",
+          "description": "Map Efficacy Function与CKM更新调度",
+          "executed_at": "2026-07-12T06:30:34.173Z"
+        }
+      },
+      {
+        "id": "dynamic_map",
+        "label": "A Novel 6G Dynamic Channel Map Based on a Hybrid Channel Model",
+        "href": "https://arxiv.org/abs/2604.15083",
+        "query": {
+          "engine": "paper",
+          "description": "真实测量支持的RT-GBSM快速动态地图",
+          "executed_at": "2026-07-12T06:30:34.173Z"
+        }
+      },
+      {
+        "id": "angle_domain_ma",
+        "label": "Channel Map-Based Angle Domain Multiple Access",
+        "href": "https://shuaifeichen273.github.io/paper/2025_JSTSP_Channel_Map-Based_Angle_Domain_Multiple_Access_for_Cell-Free_Massive_MIMO_Communications.pdf",
+        "query": {
+          "engine": "paper",
+          "description": "CKM谱系下的多用户接收、导频、LSFD与AP选择",
+          "executed_at": "2026-07-12T06:30:34.173Z"
+        }
+      },
+      {
+        "id": "biwgs",
+        "label": "6D CKM Construction via Bidirectional Wireless Gaussian Splatting",
+        "href": "https://arxiv.org/abs/2510.26166",
+        "query": {
+          "engine": "paper",
+          "description": "连续三维Tx-Rx位置查询及其物理边界",
+          "executed_at": "2026-07-12T06:30:34.173Z"
+        }
+      },
+      {
+        "id": "capa_tutorial",
+        "label": "Electromagnetic Signal and Information Theory: A Continuous-Aperture Array Perspective",
+        "href": "https://arxiv.org/abs/2605.12910",
+        "query": {
+          "engine": "paper",
+          "description": "连续孔径传播算子、容量与自由度边界",
+          "executed_at": "2026-07-12T06:30:34.173Z"
+        }
+      },
+      {
+        "id": "3gpp_aiml",
+        "label": "3GPP TR 38.843: Study on AI/ML for NR Air Interface",
+        "href": "https://portal.3gpp.org/desktopmodules/Specifications/SpecificationDetails.aspx?specificationId=3983",
+        "query": {
+          "engine": "official-standard",
+          "description": "核验CKM相邻AI/ML标准而非CKM专用语义",
+          "executed_at": "2026-07-12T06:30:34.173Z"
+        }
+      },
+      {
+        "id": "itu_imt2030",
+        "label": "ITU-R M.2160: IMT-2030 Framework",
+        "href": "https://www.itu.int/rec/R-REC-M.2160-0-202311-I",
+        "query": {
+          "engine": "official-standard",
+          "description": "核验IMT-2030总体框架与CKM接口边界",
+          "executed_at": "2026-07-12T06:30:34.173Z"
+        }
+      }
+    ],
+    "blocks": [
+      {
+        "id": "title",
+        "type": "markdown",
+        "body": "# CKM 相关论文进展与研究 GAP 调研"
+      },
+      {
+        "id": "executive_summary",
+        "type": "markdown",
+        "body": "> 基于《课题四问题梳理与解决计划》的 11 个问题；检索截止 2026 年 7 月 12 日  \n> 结论口径：区分“提出概念”“算法仿真”“真实测量/原型”“跨场景验证”“规范性标准”，不把预印本与已同行评审成果等价。\n\n## 技术结论\n\n**仍然存在有价值的 GAP，但原文件中的 11 个问题不能原样都作为创新点。** CKM 已从二维、站点特定的路径增益插值，推进到跨城市迁移、跨 AP 推断、连续 RF 场、主动测量、材料参数反演、动态地图、导频与波束辅助、多用户角域接收以及早期信道基础模型。若仍笼统声称“首次研究主动测量、AoI 式更新、模型压缩、连续三维 CKM 或 CKM 辅助导频”，新颖性风险很高。\n\n真正尚未闭合的是以下三类问题：\n\n1. **可维护闭环**：变化检测 → 空间化的可靠度/新鲜度 → 决定何时、哪里、测什么 → 受约束测量轨迹 → 局部几何—材料联合反演 → 增量更新 → 通信任务净收益验证。\n2. **跨域统一性**：一个具有物理语义和可校准不确定度的多维 CKM，能否跨城市、郊区/乡村、室内、频率、阵列、仿真器和真实设备，仅用少量目标域测量完成适配。\n3. **任务与标准闭环**：CKM 如何以统一接口服务导频、检测、预编码、波束和定位，并在包含建图、更新、查询、失败回退成本后，仍能在 100 流级或连续孔径系统中证明净收益。\n\n因此，建议把课题主线重写为：\n\n> **面向动态复杂环境的任务感知可维护 CKM：研究跨场景、几何—材料条件化的连续多维表示，建立空间分布式可靠度与任务效用驱动的变化检测和更新机制，联合优化测量区域、测量轨迹及局部参数反演，并以导频—检测—预编码端到端净收益和标准化 benchmark 验证。**\n"
+      },
+      {
+        "id": "issue_maturity",
+        "type": "chart",
+        "chartId": "issue_maturity_chart"
+      },
+      {
+        "id": "issue_review_intro",
+        "type": "markdown",
+        "body": "\n## 11 项问题的逐项判定\n\n"
+      },
+      {
+        "id": "issue_review",
+        "type": "table",
+        "tableId": "issue_review_table"
+      },
+      {
+        "id": "main_analysis",
+        "type": "markdown",
+        "body": "\n### 成熟度摘要\n\n- **不宜再单独宣称首创**：高误差/不确定度选点、普通 UAV 路径规划、单纯材料介电参数拟合、全局 AoI 式更新、一般性低秩/压缩、CKM 辅助波束或导频。\n- **已有原型或实测但未规模化**：毫米波 CKM 波束对齐、材料参数可微校准、主动 5G Radio Map 采样、动态混合 RT–GBSM、测量驱动 CSI 预测。\n- **仍然较强的空白**：跨室内—城市—乡村与仿真—真实的统一多维 CKM；复杂几何—材料联合增量更新；“何时—哪里—测什么—怎么走”联合决策；连续孔径/极化模态 CKM；100 流级端到端净收益；专用交换规范和统一 benchmark。\n\n## 关键论文进展及其边界\n\n### 1. 从站点特定二维地图到跨环境、多维连续表示\n\nCKM 奠基工作把 CKM 定义为与收发位置关联的 **site-specific** 信道知识数据库，并展示了资源分配和波束选择价值；2024 年教程进一步系统化 B2X/X2X、构建、查询和应用框架，但并未给出通用跨域模型。[奠基论文](https://arxiv.org/abs/2007.09332)；[CKM 教程](https://arxiv.org/abs/2309.07460)\n\n跨环境能力已有明显推进：\n\n- [PMNet](https://arxiv.org/abs/2312.03950) 在 USC、UCLA、Boston 地图间迁移，报告新场景适配约 5.6 倍加速、所需数据约减少 4.5 倍，但仍是二维路径损耗、射线追踪主导且需要微调。\n- [第一届室外 Pathloss Radio Map Challenge](https://arxiv.org/abs/2310.07658) 用多个城市训练、在未见城市 Istanbul 测试，证明跨城市可学，同时也暴露未见城市性能下降。[第一届室内挑战](https://arxiv.org/abs/2501.13698) 覆盖 25 个室内环境、频段和天线方向图；最困难联合任务的领先加权 RMSE 仍约 9.41 dB，说明跨布局、频率和天线泛化远未饱和。\n- [CKMImageNet](https://arxiv.org/abs/2504.09849) 将增益、时延、AoA/AoD 等组织成多维 CKM 数据，但“数据集格式”尚不等于跨厂商标准。\n- [AIRMap](https://arxiv.org/abs/2511.05522) 把验证扩展到多种城市/乡村地貌，并使用现场测量轻量校准，但输出仍主要是 path gain，且真实部署依赖目标区域校准。\n- [Cross-environment Transformer](https://arxiv.org/abs/2605.08211) 面向任意 3D Tx–Rx 对，在新环境达到目标误差时报告约 5 倍测量节省；仍需目标环境样本，主要预测窄带标量增益。\n- [F4-CKM](https://arxiv.org/abs/2601.03601) 和 [GRaF](https://kangyangg.com/projects/graf/) 把 CKM 推向连续 RF radiance field 和跨布局生成；跨频、硬件变化和大规模实测仍是弱点。\n- [CSI-CLIP++](https://arxiv.org/abs/2606.25714) 探索 CIR–CSI 一致的信道基础表征及跨仿真器迁移，但仍是很新的预印本，缺少可解释物理语义和真实网络规模验证。\n\n**判定：**“跨环境迁移是否可能”已有肯定答案；“是否存在固定权重、统一物理语义、无需逐场景重训的通用 CKM”仍没有肯定答案。\n\n### 2. 主动测量：原始构想已被占位，闭环目标仍未解决\n\n[Spectrum Surveying](https://arxiv.org/abs/2201.04125) 在 2022 年已将无线电地图不确定度与飞行时间组合，滚动规划 UAV 测量路径。[Bayesian Active Learning for Sample Efficient 5G Radio Map Reconstruction](https://doi.org/10.1109/TWC.2024.3483112) 又在仿真与真实城市/郊区 5G 数据上研究不确定度选点和移动距离，报告相对随机选点最高约 54.8% NMSE 改善与 57.1% 移动距离减少。\n\n2025–2026 年的工作更接近原文件表述：[Flow Matching-Based Active Learning](https://arxiv.org/abs/2509.13822) 已组合生成模型不确定度、候选点选择和 utility-aware path search；[Bayesian Diffusion 主动 CKM](https://arxiv.org/abs/2606.29862) 结合 epistemic uncertainty 与空间均匀性；[3D-URAM](https://arxiv.org/abs/2606.12844) 进一步在 300 m × 200 m × 100 m 实地范围进行 3D 主动感知验证。\n\n**判定：**“选择预测误差大的点并规划路径”不足以形成新的贡献。剩余问题是不同信息价值的联合：地图误差降低、环境变化确认、几何/材料可辨识性、下游通信收益、安全、能量和时限。\n\n### 3. 几何和材料校准：材料已能学，联合在线维护尚未闭环\n\n[Learning Radio Environments by Differentiable Ray Tracing](https://arxiv.org/abs/2311.18558) 已利用合成和 3.438 GHz 真实室内分布式 MIMO 测量学习材料、散射和天线参数；但几何预先给定，材料参数可能吸收几何和模型误差，且存在非凸与不可辨识问题。[UAV 轨迹辅助介电常数感知](https://doi.org/10.1109/TWC.2024.3457016) 甚至已经以材料参数 CRLB 为目标规划采样轨迹，但同样假定几何已知、主要做仿真。\n\n2026 年的 [RF inverse rendering](https://arxiv.org/abs/2604.07086)、[mmDiff](https://arxiv.org/abs/2605.26406) 和 [VisRFTwin](https://arxiv.org/abs/2603.13383) 继续推进 RF-BSDF、带噪真实三维网格和视觉材料先验。mmDiff 在真实室内稀疏测量上报告 AoA 功率谱 MAE 4.60 dB，相比 Sionna 镜面基线 15.11 dB，但论文明确把完整复杂网格校准留作后续。\n\n**判定：**“用信道测量校准材料”已经较成熟；“定位变化区域、只解冻局部网格，同时反演几何与材料并量化不确定度”仍是明确空白。\n\n### 4. 动态更新与地图新鲜度：MEF 已正面命中 AoI 设想\n\n[Update Strategy for CKM in Complex Environments](https://arxiv.org/abs/2512.15154) 明确指出经典 AoI 只表示年龄，不能反映环境变化导致的任务损失；论文提出 Map Efficacy Function（MEF），建模连续老化、突变、更新停机和成本，并用 Dinkelbach 方法优化更新时机。其合成实验中，近线性算法达到最高 MEF 的 98.6%，同时报告成本降低 37.5%、更新次数降低 33.3%。这与原文件第 9 项高度重合。\n\n另一方面，[Dynamic CKM in MIMO-OFDM](https://arxiv.org/abs/2512.23470) 分离准静态与动态路径；[Hybrid Dynamic Channel Map](https://arxiv.org/abs/2604.15083) 在 5.5 GHz 实测场景以离线 RT + 在线 GBSM 将一次更新从完整 RT 的约 874 s 降至约 0.4 s；[Anchor-CKM](https://arxiv.org/abs/2607.01453) 使用少量锚点刷新大面积缺失区域。这些结果说明快速动态更新正在形成子方向，但它们多数更新信道参数或地图快照，而非真实维护几何—材料数字孪生。\n\n**判定：**全局 AoI/MEF + 更新时间优化已经不新；可做的是在线学习的区域化任务效用、事件触发局部更新，以及更新区域、采样、轨迹和模型参数的联合决策。\n\n### 5. CKM 辅助传输：已从波束走向多用户，但百流尚无闭环\n\n[Environment-Aware Hybrid Beamforming](https://arxiv.org/abs/2206.08707) 已在 64–400 根 BS 天线、最多 4 流条件下展示 CKM 缩短训练并接近完美 CSI 性能；[毫米波 CKM 波束对齐原型](https://arxiv.org/abs/2403.08200) 用 USRP、28 GHz 相控阵、UWB 定位展示在线近似免训练查表，但离线仍需逐网格穷举波束测量。\n\n[Channel Map-Based Angle Domain Multiple Access](https://shuaifeichen273.github.io/paper/2025_JSTSP_Channel_Map-Based_Angle_Domain_Multiple_Access_for_Cell-Free_Massive_MIMO_Communications.pdf) 已把地图用于 Cell-Free 上行角域 L/LP-MMSE、LSFD、导频分配和 AP 选择；仿真规模为 20/40 用户。PCM 相对无地图方案的平均和 95%-likely SE 分别约提升 9.8% 和 36.0%，但完整 CSI 地图结果依赖强先验，且没有计入建图、老化和查询成本。[干扰抵消 CKM](https://arxiv.org/abs/2409.00461) 也已把高维估计复杂度转化为与有效路径数相关的运算。\n\n近场 CKM 亦已出现：[CADM 辅助 XL-array 信道估计](https://doi.org/10.1109/ACCESS.2025.3606947) 在 256 阵元、单用户仿真中报告约 40%–50% 导频节省；但连续孔径、多用户近场检测和硬件时限并未验证。\n\n**判定：**本次检索到的直接 CKM 传输论文常见规模上限约为 40 个单流用户；没有发现 100 条及以上同时数据流下“地图—导频—估计—检测—预编码”的完整实证。因此 100 流是有效的验证 GAP，但必须证明物理信道秩和硬件规模支持该流数，且不能把“候选用户数”误写成“同时空间流数”。\n\n### 6. 连续空间与所谓“新自由度”：需修正科学表述\n\n[6D Bidirectional Wireless Gaussian Splatting](https://arxiv.org/abs/2510.26166) 已能对三维 Tx 位置与三维 Rx 位置组成的 6D X2X CKM 连续查询。但“6D”只是六个位置坐标，不等于新增六个物理通信自由度；其验证仍是静态、窄带、有限离散阵列和 Sionna 合成场景。\n\n连续孔径/全息 MIMO 文献表明，近场球面波可显式利用距离聚焦和更丰富的空间模态；实验工作也已验证近场多空间 DoF。[连续孔径电磁信号与信息论教程](https://arxiv.org/abs/2605.12910)；[连续孔径 DoF 分析](https://arxiv.org/abs/2502.14404)；[近场空间 DoF 实验](https://arxiv.org/abs/2602.21945)\n\n但连续模型不会凭空创造无限 DoF。可用 DoF 是传播算子在给定孔径、波长、几何、极化、互耦、SNR 和观测区域下的有效秩。距离域聚焦通常是近场空间结构；OAM 也是空间模态的一种表达，而不是独立于空间的新维度。更准确的研究问题是：\n\n> CKM 能否提前学习不同位置和频率下的传播算子主模态、极化耦合及其置信度，从而减少连续孔径或近场系统发现、训练和调度这些既有电磁模态的开销？\n\n这构成 CKM 与连续孔径信息论的真实交叉 GAP。\n\n### 7. 表示、接口和评估标准：相邻标准存在，CKM 语义层仍缺\n\n目前有相邻基础设施，但不能等同于 CKM 标准：\n\n- [3GPP TR 38.843](https://portal.3gpp.org/desktopmodules/Specifications/SpecificationDetails.aspx?specificationId=3983) 研究 NR 空口 AI/ML 用例；[3GPP NR AI/ML](https://www.3gpp.org/technologies/ai-ml-nr) 和 [NG-RAN AI/ML](https://www.3gpp.org/technologies/ai-ml-ngran) 涵盖模型协作、训练、推理与数据收集。\n- [3GPP TS 37.320](https://portal.3gpp.org/desktopmodules/Specifications/SpecificationDetails.aspx?specificationId=2602) 规范 MDT 无线测量收集，但不规定如何把测量组织成 CKM。\n- [ITU-R M.2160](https://www.itu.int/rec/R-REC-M.2160-0-202311-I) 给出 IMT-2030 总体框架，包含 AI、感知和定位方向，但没有定义 CKM API、字段和一致性测试。\n\n截至本次检索，在上述官方目录中**未发现 CKM 专用的规范性对象模型、查询接口、生命周期、互操作流程或一致性测试**。这不是证明“全球绝无相关提案”，而是说明公开正式规范层仍未成熟。\n\n一个可用的最小 CKM 交换对象至少需要包含：\n\n- 查询键：Tx/Rx 三维坐标、时间、频率、带宽、阵列、极化、波形、环境版本；\n- 输出：path gain、CIR/CSI、PDP、AoA/AoD、时延、Doppler、协方差、多径对象或低秩传播模态；\n- 元数据：坐标参考系、单位、分辨率、置信度、有效期、更新时间、来源、设备和校准状态；\n- 操作：点/区域/批量查询、流式更新、增量同步、权限、版本回滚；\n- 一致性测试：跨设备、跨频段、跨站点、跨仿真器和仿真到实测的误差门限与退化曲线。\n\n## 最值得立项的三个 GAP\n\n### GAP A：任务效用驱动的可维护 CKM 闭环（首选主线）\n\n现有论文通常只解决一段链路：主动采样只决定“去哪里”，MEF 只决定“何时更新”，材料反演假定几何已知，动态地图只生成快照，传输论文又假定地图已构好。尚缺一个真实系统闭环：\n\n> **变化检测 → 区域/任务可靠度 → 触发与区域选择 → 测量内容及轨迹 → 局部几何—材料联合校准 → 增量 CKM → 导频/波束/检测净收益。**\n\n可将联合目标写成：任务收益增量 ÷（测量 + 移动 + 更新训练 + 查询 + 停机 + 失败回退成本），而非仅优化地图 RMSE。\n\n最小可发表实验：选一个会发生遮挡物/家具/车辆变化的真实场景；同步采集 RGB-D/LiDAR、位置、宽带 CSI；比较固定周期、全局 MEF、不确定度采样和所提联合策略；报告区域变化定位、材料/几何误差、CKM NMSE、波束/SE/BLER、能耗、P95 时延及累计测量距离。\n\n### GAP B：跨场景、跨设备的物理多径基础表示与标准 benchmark\n\n建议不要再做单一 pathloss 网络，而是输出带不确定度的多径对象或传播算子低秩模态，例如每条有效路径的复增益、时延、AoA/AoD、Doppler、极化耦合和协方差。由同一底层对象派生 path gain、CIR、CSI、波束和定位信息。\n\n必须采用真正能检验“通用”的拆分：leave-one-city、leave-one-environment-type、leave-one-frequency、leave-one-array、leave-one-simulator、simulation-to-real、real-site-to-real-site，以及动态环境老化测试。评价同时覆盖信道误差、校准度、任务收益和生命周期成本。\n\n### GAP C：连续孔径/近场/极化模态 CKM 与 100 流级联合传输\n\n该方向理论辨识度最高，但实验门槛也最高。目标不是声称 CKM 创造新 DoF，而是学习有限电磁传播算子的任务相关主模态和不确定度，联合选择零/短/完整导频、检测和预编码，并研究 4、16、40、100+ 流下的标度规律。\n\n必须设置三项防伪条件：\n\n1. 用传播算子奇异值或有效秩证明场景确实支持相应流数；\n2. 把建图、更新、查询、定位、推理和失败回退计入净频谱效率；\n3. 至少使用测量、信道仿真硬件在环或 FPGA/GPU 实时测试之一，避免只在理想矩阵上宣称“百流”。\n\n## 建议的课题与论文结构\n\n"
+      },
+      {
+        "id": "paper_plan",
+        "type": "table",
+        "tableId": "paper_plan_table"
+      },
+      {
+        "id": "closing",
+        "type": "markdown",
+        "body": "\n\n优先级建议：\n\n1. **优先做 GAP A**：与文件问题衔接最好，也最容易利用课题一的真实测量形成壁垒。\n2. **用 GAP B 做底座**：统一数据对象和严格切分可支撑后续所有论文，也能避免“模型只在自有数据上好”的质疑。\n3. **将 GAP C 作为高风险高收益分支**：若没有超大阵列、测量或硬件条件，先做 4–40 流的可信标度与传播算子理论，再决定是否承诺 100 流。\n\n## 近期执行建议\n\n1. 立即从课题文本中删除或降级以下首创表述：“预测误差大处选点”“类似 AoI 的指标”“模型压缩/低秩”“CKM 辅助导频”“连续 6D 即新自由度”。\n2. 建立逐论文复现实验矩阵，至少包含 PMNet/CKMDiff、Spectrum Surveying 或 Bayesian Active Learning、可微 RT 材料校准、MEF、CKM 传输基线各一项。\n3. 先定义数据协议再训练模型：坐标、频率、阵列、极化、校准、时间戳、环境版本和不确定度不可后补。\n4. 把“真实长期动态数据”视为关键资产：同一场景跨周/月、记录环境变化，并同步视觉/几何与多频信道。\n5. 预注册评测：跨域拆分、无空间泄漏、生命周期成本、P95/P99 时延、失败回退、统计置信区间和消融实验。\n\n## 证据限制与稳健性说明\n\n- 本报告是围绕 11 个问题的目标化证据审查，不是 PRISMA 式系统综述，也不声称穷尽全部 CKM 文献。\n- 2025–2026 年大量结果仍为预印本；其数值用于判断研究方向是否已被占位，不等同于已被同行评审确认。\n- 不同论文的场景、频段、数据切分和指标不同，数值不能横向直接排名；报告只在同一论文内部引用相对结果。\n- 对“未发现 CKM 专用标准”和“未发现 100 流端到端验证”的表述仅限本次公开来源检索，不构成绝对不存在证明。\n- “新自由度”判断依据电磁传播算子的有效秩。若后续实测发现此前模型忽略的独立极化/近场模态，应表述为发现或利用既有物理模态，而不是 CKM 创造了新的基本维度。\n\n## 最终判断\n\n**有 GAP，而且可以形成一条较完整的研究主线；但创新点需要从“单模块首次提出”升级为“跨域、动态、可校准、任务闭环和真实验证”。** 原文件最有价值的内容不是其中某一个孤立算法设想，而是能够把统一表示、主动测量、环境反演、动态更新和传输收益串成 CKM 全生命周期。如果能依托课题一获得真实、长期、多模态、多频信道数据，这条主线的原创性和可防御性会明显强于再做一个二维 pathloss 重建网络。\n"
+      }
+    ]
+  },
+  "snapshot": {
+    "version": 1,
+    "generatedAt": "2026-07-12T06:30:34.173Z",
+    "status": "ready",
+    "datasets": {
+      "issue_maturity": [
+        {
+          "category": "强GAP",
+          "count": 5,
+          "items": "1、3、5、10、11",
+          "interpretation": "仍有实质空白，但需以可验证边界重写"
+        },
+        {
+          "category": "需收束",
+          "count": 3,
+          "items": "4、6、7",
+          "interpretation": "相关模块已推进，应转向交叉或闭环问题"
+        },
+        {
+          "category": "原表述已占据",
+          "count": 3,
+          "items": "2、8、9",
+          "interpretation": "宽泛创新点已有高度重合工作"
+        }
+      ],
+      "issue_review": [
+        {
+          "item_no": 1,
+          "question": "城市、郊区、室内分别建模后形成统一 CKM",
+          "progress": "跨城市、跨布局和少样本迁移已有进展，多数仍局限二维 path gain、同一仿真体系或目标域微调",
+          "gap_status": "强 GAP，但必须具体化",
+          "rewrite": "多维连续 CKM + 环境不变表示/场景低维适配 + 室内—城市—乡村及仿真到实测联合验证"
+        },
+        {
+          "item_no": 2,
+          "question": "在预测误差大或聚类中心处选点并规划轨迹",
+          "progress": "不确定度驱动 UAV 路径、真实 5G 主动采样、生成模型选点和 utility-aware path 已出现",
+          "gap_status": "原核心思路已被占据",
+          "rewrite": "联合地图误差、变化检测、参数可辨识度、任务效用、能耗和安全约束"
+        },
+        {
+          "item_no": 3,
+          "question": "用信道数据校准环境几何和材料电磁参数",
+          "progress": "材料、散射和天线参数可微校准已有真实测量；复杂网格几何通常固定",
+          "gap_status": "材料较成熟；联合在线反演仍有强 GAP",
+          "rewrite": "局部几何—材料联合反演、误差归因、跨频一致性、可辨识性和置信区间"
+        },
+        {
+          "item_no": 4,
+          "question": "用实时数据更新几何和材料、维护 CKM",
+          "progress": "动态路径分离、RT+GBSM、时序预测、局部刷新和 ISAC 补偿已有工作",
+          "gap_status": "部分解决",
+          "rewrite": "变化定位—局部解冻—联合更新几何/材料—长期真实闭环"
+        },
+        {
+          "item_no": 5,
+          "question": "CKM 降低导频/检测/预编码复杂度并支持同频 100 流",
+          "progress": "波束、导频、估计、角域多用户接收和调度已有工作；直接论文常见 1–40 流/用户",
+          "gap_status": "导频/检测已有进展；100 流实证仍是 GAP",
+          "rewrite": "定义流数口径并评估净 SE、P95 延迟、能耗、地图错误和回退训练"
+        },
+        {
+          "item_no": 6,
+          "question": "连续立体空间模型及空间/时间/频率外的新自由度",
+          "progress": "6D X2X CKM、RF 场、连续孔径/全息 MIMO 和近场 DoF 已分别发展",
+          "gap_status": "交叉方向有 GAP；创造新自由度表述不成立",
+          "rewrite": "学习和调度近场距离聚焦、极化及连续孔径电磁模态"
+        },
+        {
+          "item_no": 7,
+          "question": "比较新旧模型下的传输性能",
+          "progress": "RMSE/NMSE、SE、EE、BLER 等指标分散，常忽略建图和更新成本",
+          "gap_status": "非独立创新；统一评测仍有 GAP",
+          "rewrite": "信道误差—可信度—任务收益—生命周期成本四层 benchmark"
+        },
+        {
+          "item_no": 8,
+          "question": "CKM 查询/推理开销；做压缩、低秩或稀疏化",
+          "progress": "低秩、稀疏采样、生成加速和 Gaussian Splatting 剪枝已有大量工作",
+          "gap_status": "宽泛压缩 CKM 已被占据",
+          "rewrite": "任务最小充分 CKM 与更新—存储—查询—空口净收益联合优化"
+        },
+        {
+          "item_no": 9,
+          "question": "设计类似 AoI 的及时性/可靠性指标和更新策略",
+          "progress": "Map Efficacy Function 已批评经典 AoI 并优化 CKM 更新时间",
+          "gap_status": "原表述基本被占据",
+          "rewrite": "在线学习的任务级/区域级可靠度，联合更新时机、区域、采样和轨迹"
+        },
+        {
+          "item_no": 10,
+          "question": "不同设备/系统间的 CKM 通用表示与转换",
+          "progress": "已有 REKP、RF radiance field、数据集和 foundation representation；无专用规范语义层",
+          "gap_status": "强 GAP",
+          "rewrite": "定义物理多径对象、查询键、坐标/单位、置信度、有效期、来源、版本和能力协商"
+        },
+        {
+          "item_no": 11,
+          "question": "标准化评估 CKM 的资源、响应、能耗和精度",
+          "progress": "有挑战赛和论文级指标，但数据、切分、硬件及系统假设碎片化",
+          "gap_status": "强 GAP，但列指标不够",
+          "rewrite": "公开协议、跨域切分、生命周期核算、硬件测试规程和任务门限"
+        }
+      ],
+      "paper_plan": [
+        {
+          "module": "P1 统一表示",
+          "scientific_question": "哪些传播知识跨环境不变，哪些只需少量局部参数适配？",
+          "source_items": "1、10",
+          "deliverable": "多维物理对象/低秩模态表示；跨域 benchmark"
+        },
+        {
+          "module": "P2 主动校准",
+          "scientific_question": "哪组测量最大化变化检测与几何—材料可辨识度，同时满足轨迹约束？",
+          "source_items": "2、3",
+          "deliverable": "联合 acquisition + trajectory；局部反演与不确定度"
+        },
+        {
+          "module": "P3 动态维护",
+          "scientific_question": "何时、哪里、更新什么，才能最大化任务效用并控制生命周期成本？",
+          "source_items": "4、8、9",
+          "deliverable": "空间化 MEF/可靠度；事件触发增量更新"
+        },
+        {
+          "module": "P4 通信闭环",
+          "scientific_question": "CKM 在导频—检测—预编码中的净收益能否随流数稳定扩展？",
+          "source_items": "5、6、7、11",
+          "deliverable": "4→16→40→100+ 流标度实验；硬件/测量验证"
+        }
+      ]
+    }
+  },
+  "sources": [
+    {
+      "id": "source_document",
+      "label": "《课题四问题梳理与解决计划》11项问题提取",
+      "path": "source_document_extract.md",
+      "query": {
+        "engine": "local-file",
+        "description": "从用户提供的 DOCX OOXML 正文提取并人工归并为 11 个问题",
+        "executed_at": "2026-07-12T06:30:34.173Z"
+      }
+    },
+    {
+      "id": "source_notes",
+      "label": "检索方法、证据边界与代表性来源清单",
+      "path": "source_notes.md",
+      "query": {
+        "engine": "source-review",
+        "description": "围绕11个问题的目标化一手文献与官方标准目录核验；截止2026-07-12",
+        "executed_at": "2026-07-12T06:30:34.173Z"
+      }
+    },
+    {
+      "id": "issue_maturity_sql",
+      "label": "11项问题成熟度分类派生数据",
+      "path": "issue_maturity.sql",
+      "query": {
+        "engine": "sql-values",
+        "sql": "SELECT * FROM (VALUES ('强GAP', 5, '1、3、5、10、11', '仍有实质空白，但需以可验证边界重写'), ('需收束', 3, '4、6、7', '相关模块已推进，应转向交叉或闭环问题'), ('原表述已占据', 3, '2、8、9', '宽泛创新点已有高度重合工作')) AS issue_maturity(category, count, items, interpretation);",
+        "description": "由11项逐条证据审查结果汇总的透明分类数据；非论文计量",
+        "executed_at": "2026-07-12T06:30:34.173Z"
+      }
+    },
+    {
+      "id": "issue_review_sql",
+      "label": "11项问题逐项证据判定",
+      "path": "issue_review.sql"
+    },
+    {
+      "id": "paper_plan_sql",
+      "label": "建议的课题与论文结构",
+      "path": "paper_plan.sql"
+    },
+    {
+      "id": "foundational_ckm",
+      "label": "Toward Environment-Aware 6G Communications via CKM",
+      "href": "https://arxiv.org/abs/2007.09332",
+      "query": {
+        "engine": "paper",
+        "description": "CKM定义与早期应用边界",
+        "executed_at": "2026-07-12T06:30:34.173Z"
+      }
+    },
+    {
+      "id": "ckm_tutorial",
+      "label": "A Tutorial on Environment-Aware Communications via CKM for 6G",
+      "href": "https://arxiv.org/abs/2309.07460",
+      "query": {
+        "engine": "paper",
+        "description": "CKM体系、构建、查询、应用与开放问题",
+        "executed_at": "2026-07-12T06:30:34.173Z"
+      }
+    },
+    {
+      "id": "ckmdiff",
+      "label": "CKMDiff, npj Wireless Technology, 2026",
+      "href": "https://www.nature.com/articles/s44459-026-00042-1",
+      "query": {
+        "engine": "journal",
+        "description": "生成式CKM去噪、补全和超分辨率的近期同行评审证据",
+        "executed_at": "2026-07-12T06:30:34.173Z"
+      }
+    },
+    {
+      "id": "pmnet",
+      "label": "A Scalable and Generalizable Pathloss Map Prediction",
+      "href": "https://arxiv.org/abs/2312.03950",
+      "query": {
+        "engine": "paper",
+        "description": "跨城市迁移与目标域微调边界",
+        "executed_at": "2026-07-12T06:30:34.173Z"
+      }
+    },
+    {
+      "id": "indoor_challenge",
+      "label": "The First Indoor Pathloss Radio Map Prediction Challenge",
+      "href": "https://arxiv.org/abs/2501.13698",
+      "query": {
+        "engine": "paper",
+        "description": "跨室内布局、频率和天线方向图benchmark",
+        "executed_at": "2026-07-12T06:30:34.173Z"
+      }
+    },
+    {
+      "id": "ckmimagenet",
+      "label": "CKMImageNet",
+      "href": "https://arxiv.org/abs/2504.09849",
+      "query": {
+        "engine": "paper",
+        "description": "多维CKM数据对象与数据集边界",
+        "executed_at": "2026-07-12T06:30:34.173Z"
+      }
+    },
+    {
+      "id": "spectrum_surveying",
+      "label": "Spectrum Surveying: Active Radio Map Estimation with Autonomous UAVs",
+      "href": "https://arxiv.org/abs/2201.04125",
+      "query": {
+        "engine": "paper",
+        "description": "不确定度驱动主动测量与轨迹的先行工作",
+        "executed_at": "2026-07-12T06:30:34.173Z"
+      }
+    },
+    {
+      "id": "bayes_active",
+      "label": "Bayesian Active Learning for Sample Efficient 5G Radio Map Reconstruction",
+      "href": "https://doi.org/10.1109/TWC.2024.3483112",
+      "query": {
+        "engine": "paper",
+        "description": "真实5G数据、主动选点与移动代价",
+        "executed_at": "2026-07-12T06:30:34.173Z"
+      }
+    },
+    {
+      "id": "learning_radio_environments",
+      "label": "Learning Radio Environments by Differentiable Ray Tracing",
+      "href": "https://arxiv.org/abs/2311.18558",
+      "query": {
+        "engine": "paper",
+        "description": "真实测量下的材料、散射和天线参数学习",
+        "executed_at": "2026-07-12T06:30:34.173Z"
+      }
+    },
+    {
+      "id": "mef_update",
+      "label": "Update Strategy for Channel Knowledge Map in Complex Environments",
+      "href": "https://arxiv.org/abs/2512.15154",
+      "query": {
+        "engine": "paper",
+        "description": "Map Efficacy Function与CKM更新调度",
+        "executed_at": "2026-07-12T06:30:34.173Z"
+      }
+    },
+    {
+      "id": "dynamic_map",
+      "label": "A Novel 6G Dynamic Channel Map Based on a Hybrid Channel Model",
+      "href": "https://arxiv.org/abs/2604.15083",
+      "query": {
+        "engine": "paper",
+        "description": "真实测量支持的RT-GBSM快速动态地图",
+        "executed_at": "2026-07-12T06:30:34.173Z"
+      }
+    },
+    {
+      "id": "angle_domain_ma",
+      "label": "Channel Map-Based Angle Domain Multiple Access",
+      "href": "https://shuaifeichen273.github.io/paper/2025_JSTSP_Channel_Map-Based_Angle_Domain_Multiple_Access_for_Cell-Free_Massive_MIMO_Communications.pdf",
+      "query": {
+        "engine": "paper",
+        "description": "CKM谱系下的多用户接收、导频、LSFD与AP选择",
+        "executed_at": "2026-07-12T06:30:34.173Z"
+      }
+    },
+    {
+      "id": "biwgs",
+      "label": "6D CKM Construction via Bidirectional Wireless Gaussian Splatting",
+      "href": "https://arxiv.org/abs/2510.26166",
+      "query": {
+        "engine": "paper",
+        "description": "连续三维Tx-Rx位置查询及其物理边界",
+        "executed_at": "2026-07-12T06:30:34.173Z"
+      }
+    },
+    {
+      "id": "capa_tutorial",
+      "label": "Electromagnetic Signal and Information Theory: A Continuous-Aperture Array Perspective",
+      "href": "https://arxiv.org/abs/2605.12910",
+      "query": {
+        "engine": "paper",
+        "description": "连续孔径传播算子、容量与自由度边界",
+        "executed_at": "2026-07-12T06:30:34.173Z"
+      }
+    },
+    {
+      "id": "3gpp_aiml",
+      "label": "3GPP TR 38.843: Study on AI/ML for NR Air Interface",
+      "href": "https://portal.3gpp.org/desktopmodules/Specifications/SpecificationDetails.aspx?specificationId=3983",
+      "query": {
+        "engine": "official-standard",
+        "description": "核验CKM相邻AI/ML标准而非CKM专用语义",
+        "executed_at": "2026-07-12T06:30:34.173Z"
+      }
+    },
+    {
+      "id": "itu_imt2030",
+      "label": "ITU-R M.2160: IMT-2030 Framework",
+      "href": "https://www.itu.int/rec/R-REC-M.2160-0-202311-I",
+      "query": {
+        "engine": "official-standard",
+        "description": "核验IMT-2030总体框架与CKM接口边界",
+        "executed_at": "2026-07-12T06:30:34.173Z"
+      }
+    }
+  ]
+}
